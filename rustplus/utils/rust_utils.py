@@ -244,17 +244,24 @@ class HackyBackwardsCompatCoordClass:
 
 def convert_xy_to_grid(coords: tuple, map_size: float, catch_out_of_bounds: bool = True) -> HackyBackwardsCompatCoordClass:
     if _is_outside_grid_system(coords[0], coords[1], map_size):
-        direction = ""
-        if coords[1] < 0:
-            direction += "South"
-        elif coords[1] > map_size:
-            direction += "North"
-        if coords[0] < 0:
-            direction += "West"
-        elif coords[0] > map_size:
-            direction += "East"
+        if coords[1] < 0 and (map_size > coords[0 > 0]):
+            return "Bottom " + _get_grid_x(coords[0])
+        if coords[1] > map_size and (map_size > coords[0] > 0):
+            return "Top " + _get_grid_x(coords[0])
+        if coords[0] < 0 and (map_size > coords[1] > 0):
+            return "Left " + _get_grid_y(coords[1])
+        if coords[0] > map_size and (map_size > coords[1] > 0):
+            return "Right " + _get_grid_y(coords[1])
         
-        return direction if direction else "Out of bounds"
+        if coords[0] < 0 and coords[1] < 0:
+            return "Top Left"
+        if coords[0] > map_size and coords[1] < 0:
+            return "Top Right"
+        if coords[0] < 0 and coords[1] > map_size:
+            return "Bottom Left"
+        if coords[0] > map_size and coords[1] > map_size:
+            return "Bottom Right" 
+        
 
     corrected_map_size = _get_corrected_map_size(map_size)
     grid_pos_letters = _get_grid_x(coords[0])
