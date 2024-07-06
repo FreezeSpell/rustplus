@@ -175,6 +175,8 @@ def event_type_to_name(type) -> str:
         return "Generic Radius"
     elif type == 8:
         return "Patrol Helicopter"
+    elif type == 9:
+        return "Travelling Vendor"
 
 
 def _get_grid_x(x):
@@ -249,9 +251,9 @@ def convert_xy_to_grid(coords: tuple, map_size: float, catch_out_of_bounds: bool
         if coords[1] > map_size and (map_size > coords[0] > 0):
             return "Top " + _get_grid_x(coords[0])
         if coords[0] < 0 and (map_size > coords[1] > 0):
-            return "Left " + _get_grid_y(coords[1])
+            return "Left " + str(int(_get_grid_y(coords[1], corrected_map_size)))
         if coords[0] > map_size and (map_size > coords[1] > 0):
-            return "Right " + _get_grid_y(coords[1])
+            return "Right " + str(int(_get_grid_y(coords[1], corrected_map_size)))
         
         if coords[0] < 0 and coords[1] < 0:
             return "Top Left"
@@ -263,7 +265,7 @@ def convert_xy_to_grid(coords: tuple, map_size: float, catch_out_of_bounds: bool
             return "Bottom Right" 
         
 
-    corrected_map_size = _get_corrected_map_size(map_size)
+    corrected_map_size = map_size
     grid_pos_letters = _get_grid_x(coords[0])
     grid_pos_number = str(int(_get_grid_y(coords[1], corrected_map_size)))
 
