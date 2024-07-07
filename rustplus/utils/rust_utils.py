@@ -3,7 +3,9 @@ import string
 from importlib import resources
 from typing import Tuple
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
 
 from ..api.remote.rustplus_proto import AppMessage
 from ..api.structures import RustTime
