@@ -1,8 +1,9 @@
-from importlib import resources
-from typing import Tuple
-from PIL import Image, ImageDraw, ImageFont
 import logging
 import string
+from importlib import resources
+from typing import Tuple
+
+from PIL import Image, ImageDraw, ImageFont
 
 from ..api.remote.rustplus_proto import AppMessage
 from ..api.structures import RustTime
