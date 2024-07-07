@@ -251,9 +251,9 @@ def convert_xy_to_grid(coords: tuple, map_size: float, catch_out_of_bounds: bool
         if coords[1] > map_size and (map_size > coords[0] > 0):
             return "Top " + _get_grid_x(coords[0])
         if coords[0] < 0 and (map_size > coords[1] > 0):
-            return "Left " + str(int(_get_grid_y(coords[1], corrected_map_size)))
+            return "Left " + str(int(_get_grid_y(coords[1], map_size)))
         if coords[0] > map_size and (map_size > coords[1] > 0):
-            return "Right " + str(int(_get_grid_y(coords[1], corrected_map_size)))
+            return "Right " + str(int(_get_grid_y(coords[1], map_size)))
         
         if coords[0] < 0 and coords[1] < 0:
             return "Top Left"
