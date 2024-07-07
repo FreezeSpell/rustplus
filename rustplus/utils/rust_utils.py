@@ -216,8 +216,7 @@ def _get_corrected_map_size(map_size):
 
 def _is_outside_grid_system(x, y, map_size, offset=0):
     return (
-        x < -offset or x > (map_size + offset) or y < -
-        offset or y > (map_size + offset)
+        x < -offset or x > (map_size + offset) or y < -offset or y > (map_size + offset)
     )
 
 
@@ -245,7 +244,9 @@ class HackyBackwardsCompatCoordClass:
         return self.__repr__()
 
 
-def convert_xy_to_grid(coords: tuple, map_size: float, catch_out_of_bounds: bool = True) -> HackyBackwardsCompatCoordClass:
+def convert_xy_to_grid(
+    coords: tuple, map_size: float, catch_out_of_bounds: bool = True
+) -> HackyBackwardsCompatCoordClass:
     if _is_outside_grid_system(coords[0], coords[1], map_size):
         if coords[1] < 0 and (map_size > coords[0 > 0]):
             return "Bottom " + _get_grid_x(coords[0])
