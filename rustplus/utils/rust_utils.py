@@ -24,6 +24,7 @@ def format_time(protobuf: AppMessage) -> RustTime:
     :param protobuf: AppMessage:
 
     """
+
     def convert_time(time) -> str:
         """
 
@@ -32,11 +33,8 @@ def format_time(protobuf: AppMessage) -> RustTime:
         """
         hours, minutes = divmod(time * 60, 60)
 
-        return (
-            f"{int(hours)}:0{int(minutes)}"
-            if minutes <= 9
-            else f"{int(hours)}:{int(minutes)}"
-        )
+        return (f"{int(hours)}:0{int(minutes)}"
+                if minutes <= 9 else f"{int(hours)}:{int(minutes)}")
 
     sunrise = convert_time(protobuf.response.time.sunrise)
     sunset = convert_time(protobuf.response.time.sunset)
@@ -172,8 +170,7 @@ def convert_monument(name: str, override_images: dict) -> Image.Image:
             icon = Image.open(path).convert("RGBA")
     else:
         logging.getLogger("rustplus.py").info(
-            f"{name} - Has no icon, report this as an issue"
-        )
+            f"{name} - Has no icon, report this as an issue")
         with resources.path(ICONS_PATH, "icon.png") as path:
             icon = Image.open(path).convert("RGBA")
     return icon
@@ -286,13 +283,13 @@ def _is_outside_grid_system(x, y, map_size, offset=0):
     :param offset:  (Default value = 0)
 
     """
-    return (
-        x < -offset or x > (map_size + offset) or y < -offset or y > (map_size + offset)
-    )
+    return (x < -offset or x > (map_size + offset) or y < -offset
+            or y > (map_size + offset))
 
 
 class HackyBackwardsCompatCoordClass:
     """ """
+
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -317,8 +314,9 @@ class HackyBackwardsCompatCoordClass:
 
 
 def convert_xy_to_grid(
-    coords: tuple, map_size: float, catch_out_of_bounds: bool = True
-) -> HackyBackwardsCompatCoordClass:
+        coords: tuple,
+        map_size: float,
+        catch_out_of_bounds: bool = True) -> HackyBackwardsCompatCoordClass:
     """
 
     :param coords: tuple:
@@ -373,9 +371,8 @@ def generate_grid(
         font = ImageFont.truetype(str(path), text_size)
 
     letters = list(string.ascii_uppercase)
-    letters.extend(
-        a + b for a in string.ascii_uppercase for b in string.ascii_uppercase
-    )
+    letters.extend(a + b for a in string.ascii_uppercase
+                   for b in string.ascii_uppercase)
 
     num_cells = int(map_size / GRID_DIAMETER)
 
@@ -392,9 +389,9 @@ def generate_grid(
     return img
 
 
-def avatar_processing(
-    image: Image.Image, border_size: int, player_online: bool = False
-) -> Image.Image:
+def avatar_processing(image: Image.Image,
+                      border_size: int,
+                      player_online: bool = False) -> Image.Image:
     """
 
     :param image: Image.Image:
@@ -417,7 +414,8 @@ def avatar_processing(
     border_layer = Image.new(
         "RGBA",
         size_with_border,
-        PLAYER_MARKER_ONLINE_COLOR if player_online else PLAYER_MARKER_OFFLINE_COLOR,
+        PLAYER_MARKER_ONLINE_COLOR
+        if player_online else PLAYER_MARKER_OFFLINE_COLOR,
     )
     border_image.paste(border_layer, mask=mask)
 
