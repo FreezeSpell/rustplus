@@ -156,7 +156,7 @@ def entity_type_to_string(id) -> str:
         return "Storage Monitor"
     else:
         raise ValueError("Not Valid type")
-    
+
 
 def event_type_to_name(type) -> str:
     if type == 1:
@@ -216,7 +216,8 @@ def _get_corrected_map_size(map_size):
 
 def _is_outside_grid_system(x, y, map_size, offset=0):
     return (
-        x < -offset or x > (map_size + offset) or y < -offset or y > (map_size + offset)
+        x < -offset or x > (map_size + offset) or y < -
+        offset or y > (map_size + offset)
     )
 
 
@@ -254,7 +255,7 @@ def convert_xy_to_grid(coords: tuple, map_size: float, catch_out_of_bounds: bool
             return "Left " + str(int(_get_grid_y(coords[1], map_size)))
         if coords[0] > map_size and (map_size > coords[1] > 0):
             return "Right " + str(int(_get_grid_y(coords[1], map_size)))
-        
+
         if coords[0] < 0 and coords[1] < 0:
             return "Top Left"
         if coords[0] > map_size and coords[1] < 0:
@@ -262,8 +263,7 @@ def convert_xy_to_grid(coords: tuple, map_size: float, catch_out_of_bounds: bool
         if coords[0] < 0 and coords[1] > map_size:
             return "Bottom Left"
         if coords[0] > map_size and coords[1] > map_size:
-            return "Bottom Right" 
-        
+            return "Bottom Right"
 
     corrected_map_size = map_size
     grid_pos_letters = _get_grid_x(coords[0])
