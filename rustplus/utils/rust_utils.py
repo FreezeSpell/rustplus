@@ -21,13 +21,13 @@ PLAYER_MARKER_OFFLINE_COLOR = (128, 128, 128, 255)
 def format_time(protobuf: AppMessage) -> RustTime:
     """
 
-    :param protobuf: AppMessage: 
+    :param protobuf: AppMessage:
 
     """
     def convert_time(time) -> str:
         """
 
-        :param time: 
+        :param time:
 
         """
         hours, minutes = divmod(time * 60, 60)
@@ -55,9 +55,9 @@ def format_time(protobuf: AppMessage) -> RustTime:
 def format_coord(x, y, map_size) -> Tuple[int, int]:
     """
 
-    :param x: 
-    :param y: 
-    :param map_size: 
+    :param x:
+    :param y:
+    :param map_size:
 
     """
     y = map_size - y - 75
@@ -78,8 +78,8 @@ def format_coord(x, y, map_size) -> Tuple[int, int]:
 def convert_marker(name, angle) -> Image.Image:
     """
 
-    :param name: 
-    :param angle: 
+    :param name:
+    :param angle:
 
     """
     name_to_file = {
@@ -115,8 +115,8 @@ def convert_marker(name, angle) -> Image.Image:
 def convert_monument(name: str, override_images: dict) -> Image.Image:
     """
 
-    :param name: str: 
-    :param override_images: dict: 
+    :param name: str:
+    :param override_images: dict:
 
     """
     name_to_file = {
@@ -182,7 +182,7 @@ def convert_monument(name: str, override_images: dict) -> Image.Image:
 def entity_type_to_string(id) -> str:
     """
 
-    :param id: 
+    :param id:
 
     """
     if id == 1:
@@ -198,7 +198,7 @@ def entity_type_to_string(id) -> str:
 def event_type_to_name(type) -> str:
     """
 
-    :param type: 
+    :param type:
 
     """
     if type == 1:
@@ -224,7 +224,7 @@ def event_type_to_name(type) -> str:
 def _get_grid_x(x):
     """
 
-    :param x: 
+    :param x:
 
     """
     counter = 1
@@ -241,8 +241,8 @@ def _get_grid_x(x):
 def _get_grid_y(y, map_size):
     """
 
-    :param y: 
-    :param map_size: 
+    :param y:
+    :param map_size:
 
     """
     counter = 1
@@ -258,7 +258,7 @@ def _get_grid_y(y, map_size):
 def _number_to_letters(num):
     """
 
-    :param num: 
+    :param num:
 
     """
     power, mod = divmod(num, 26)
@@ -269,7 +269,7 @@ def _number_to_letters(num):
 def _get_corrected_map_size(map_size):
     """
 
-    :param map_size: 
+    :param map_size:
 
     """
     remainder = map_size % GRID_DIAMETER
@@ -280,9 +280,9 @@ def _get_corrected_map_size(map_size):
 def _is_outside_grid_system(x, y, map_size, offset=0):
     """
 
-    :param x: 
-    :param y: 
-    :param map_size: 
+    :param x:
+    :param y:
+    :param map_size:
     :param offset:  (Default value = 0)
 
     """
@@ -321,8 +321,8 @@ def convert_xy_to_grid(
 ) -> HackyBackwardsCompatCoordClass:
     """
 
-    :param coords: tuple: 
-    :param map_size: float: 
+    :param coords: tuple:
+    :param map_size: float:
     :param catch_out_of_bounds: bool:  (Default value = True)
 
     """
@@ -360,7 +360,7 @@ def generate_grid(
 ) -> Image.Image:
     """
 
-    :param map_size: int: 
+    :param map_size: int:
     :param text_size: int:  (Default value = 20)
     :param text_padding: int:  (Default value = 5)
     :param color: str:  (Default value = "black")
@@ -397,8 +397,8 @@ def avatar_processing(
 ) -> Image.Image:
     """
 
-    :param image: Image.Image: 
-    :param border_size: int: 
+    :param image: Image.Image:
+    :param border_size: int:
     :param player_online: bool:  (Default value = False)
 
     """
