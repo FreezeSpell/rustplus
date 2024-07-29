@@ -123,8 +123,8 @@ class BaseRustSocket:
 
     async def connect(
         self,
-        retries: int = float("inf"),
-        delay: int = 20,
+        retries: int = 60,
+        delay: int = 60,
         on_failure: Union[Coroutine, Callable[[], None], None] = None,
         on_success: Union[Coroutine, Callable[[], None], None] = None,
         on_success_args_kwargs: Tuple[List, Dict] = ([], {}),
@@ -165,19 +165,37 @@ class BaseRustSocket:
             self.server_id,
         )
 
-        try:
-            if self.remote.ws is None:
-                await self.remote.connect(
-                    retries=retries,
-                    delay=delay,
-                    on_failure=on_failure,
-                    on_success=on_success,
-                    on_success_args_kwargs=on_success_args_kwargs,
-                    on_failure_args_kwargs=on_failure_args_kwargs,
-                )
-                await self.heartbeat.start_beat()
-        except ConnectionRefusedError:
-            raise ServerNotResponsiveError("Cannot Connect")
+        attempt = 0
+        while attempt < retries:
+            try:
+                if self.remote.ws is None:
+                    await self.remote.connect(
+                        retries=retries,
+                        delay=delay,
+                        on_failure=on_failure,
+                        on_success=on_success,
+                        on_success_args_kwargs=on_success_args_kwargs,
+                        on_failure_args_kwargs=on_failure_args_kwargs,
+                    )
+                    await self.heartbeat.start_beat()
+                    if on_success:
+                        if asyncio.iscoroutinefunction(on_success):
+                            await on_success(*on_success_args_kwargs[0], **on_success_args_kwargs[1])
+                        else:
+                            on_success(*on_success_args_kwargs[0], **on_success_args_kwargs[1])
+                    break
+                
+            except ConnectionRefusedError:
+                attempt += 1
+                if on_failure:
+                    if asyncio.iscoroutinefunction(on_failure):
+                        await on_failure(*on_failure_args_kwargs[0], **on_failure_args_kwargs[1])
+                    else:
+                        on_failure(*on_failure_args_kwargs[0], **on_failure_args_kwargs[1])
+                if attempt < retries:
+                    await asyncio.sleep(delay)
+                else:
+                    raise ServerNotResponsiveError("Cannot Connect")
 
     async def close_connection(self) -> None:
         """
