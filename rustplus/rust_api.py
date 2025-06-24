@@ -170,7 +170,7 @@ class RustSocket:
 
         packet = await self._generate_request(tokens=2)
         send_message = AppSendMessage()
-        send_message.message = message
+        send_message.message = "[Cerberus] " + message
         packet.send_team_message = send_message
 
         await self.ws.send_message(packet, True)
